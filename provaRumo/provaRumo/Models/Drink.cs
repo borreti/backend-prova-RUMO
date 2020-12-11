@@ -24,6 +24,11 @@ namespace provaRumo.Models
             this.TimeToPrepare = TimeToPrepare;
         }
 
+        public Drink()
+        {
+
+        }
+
         public void Create()
         {
             EntityModel context = new EntityModel();
