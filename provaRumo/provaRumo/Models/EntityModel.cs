@@ -12,5 +12,8 @@ namespace provaRumo.Models
         public DbSet<Food> Foods { get; set; }
         public DbSet<Drink> Drinks { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Table> Tables { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
     }
 }
