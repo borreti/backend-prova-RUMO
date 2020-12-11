@@ -9,20 +9,34 @@ namespace provaRumo.Models
 {
     public class Drink : IItem
     {
-        [Key()]
-        public int Id { get; set; }
+        public int DrinkId { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
         public float Alcohool { get; set; }
         public int TimeToPrepare { get; set; }
 
-        public Drink(int Id, string Name, double Price, float Alcohool, int TimeToPrepare)
+        public Drink(int DrinkId, string Name, double Price, float Alcohool, int TimeToPrepare)
         {
-            this.Id = Id;
+            this.DrinkId = DrinkId;
             this.Name = Name;
             this.Price = Price;
             this.Alcohool = Alcohool;
             this.TimeToPrepare = TimeToPrepare;
+        }
+
+        public void Create()
+        {
+            EntityModel context = new EntityModel();
+            //Drink drink = new Drink(DrinkId, Name, Price, Alcohool, TimeToPrepare);
+            //context.Drinks.Add(drink);
+            //context.SaveChanges();
+            //return drink;
+        }
+
+        public void Get()
+        {
+            EntityModel context = new EntityModel();
+            //Entities.Customer.First(c => c.CustomerId == 20);
         }
     }
 }
