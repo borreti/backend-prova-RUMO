@@ -9,8 +9,20 @@ namespace provaRumo.Models
 {
     public class Table
     {
-        [Key()]
-        public int Id { get; set; }
+        public int TableId { get; set; }
+        public virtual Client ClientId { get; set; }
         public bool Free { get; set; }
+
+        public Table()
+        {
+
+        }
+        
+        public Table(int TableId, Client ClientId, bool Free)
+        {
+            this.TableId = TableId;
+            this.ClientId = ClientId;
+            this.Free = Free;
+        }
     }
 }

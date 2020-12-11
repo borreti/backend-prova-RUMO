@@ -9,18 +9,22 @@ namespace provaRumo.Models
 {
     public class Order
     {
-        [Key()]
-        public int Id { get; set; }
-        public List<Food> ListFoods { get; set; }
-        public List<Drink> ListDrinks { get; set; }
+        public int OrderId { get; set; }
+        public ICollection<Food> ListFoods { get; set; }
+        public ICollection<Drink> ListDrinks { get; set; }
         public string Status { get; set; }
 
-        public Order(int Id, List<Food> ListFoods, List<Drink> ListDrinks, string Status)
+        public Order(int OrderId, List<Food> ListFoods, List<Drink> ListDrinks, string Status)
         {
-            this.Id = Id;
+            this.OrderId = OrderId;
             this.ListFoods = ListFoods;
             this.ListDrinks = ListDrinks;
             this.Status = Status;
+        }
+
+        public Order()
+        {
+
         }
         
         public double TotalPrice()

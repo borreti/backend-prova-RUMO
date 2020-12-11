@@ -8,7 +8,20 @@ namespace provaRumo.Models
 {
     public class Client
     {
-        [Key()]
-        public int Id { get; set; }
+        public int ClientId { get; set; }
+        public string Name { get; set; }
+        public float Cash { get; set; }
+
+        public Client()
+        {
+
+        }
+
+        public Client(int ClientId, string Name, float Cash)
+        {
+            this.ClientId = ClientId;
+            this.Name = Name;
+            this.Cash = Cash;
+        }
     }
 }

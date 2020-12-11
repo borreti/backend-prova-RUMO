@@ -7,19 +7,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace provaRumo.Interfaces
 {
-    interface IBasicModel
+    public interface IBasicModel
     {
-        int Id { get; set; }
-
-        // C
-        IBasicModel Create();
-        // R
-        IBasicModel Get();
-        // R
-        IBasicModel List();
-        // U
-        IBasicModel Update();
-        // D
+        IBasicModel Upsert();
+        List<IBasicModel> ListItems();
+        IBasicModel GetById(int Id);
         IBasicModel Delete();
     }
 }
