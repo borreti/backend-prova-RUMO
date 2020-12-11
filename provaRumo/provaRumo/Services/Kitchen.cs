@@ -19,8 +19,6 @@ namespace provaRumo.Models
             {
                 Thread.Sleep(item.TimeToPrepare);
             }
-            // Thread.Sleep();
-            order.FoodFinished = true;
             Free = true;
             ItemsFinished++;
         }

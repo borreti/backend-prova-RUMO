@@ -11,10 +11,15 @@ namespace provaRumo.Interfaces
     {
         int Id { get; set; }
 
-        IBasicModel save();
-        IBasicModel add();
-        IBasicModel get();
-        IBasicModel list();
-        IBasicModel remove();
+        // C
+        IBasicModel Create();
+        // R
+        IBasicModel Get();
+        // R
+        IBasicModel List();
+        // U
+        IBasicModel Update();
+        // D
+        IBasicModel Delete();
     }
 }

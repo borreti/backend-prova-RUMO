@@ -16,11 +16,13 @@ namespace provaRumo.Models
         public float Alcohool { get; set; }
         public int TimeToPrepare { get; set; }
 
-        public Drink(string Name, double Price, float Alcohool)
+        public Drink(int Id, string Name, double Price, float Alcohool, int TimeToPrepare)
         {
+            this.Id = Id;
             this.Name = Name;
             this.Price = Price;
             this.Alcohool = Alcohool;
+            this.TimeToPrepare = TimeToPrepare;
         }
     }
 }

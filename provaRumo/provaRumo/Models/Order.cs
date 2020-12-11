@@ -14,16 +14,22 @@ namespace provaRumo.Models
         public List<Food> ListFoods { get; set; }
         public List<Drink> ListDrinks { get; set; }
         public string Status { get; set; }
-        public bool FoodFinished { get; set; }
-        public bool DrinkFinished { get; set; }
-        
-        public double totalPrice()
+
+        public Order(int Id, List<Food> ListFoods, List<Drink> ListDrinks, string Status)
         {
-            double fullPrice = calcFoodPrice() + calcDrinkPrice();
+            this.Id = Id;
+            this.ListFoods = ListFoods;
+            this.ListDrinks = ListDrinks;
+            this.Status = Status;
+        }
+        
+        public double TotalPrice()
+        {
+            double fullPrice = CalcFoodPrice() + CalcDrinkPrice();
             return fullPrice;
         }
 
-        public double calcFoodPrice()
+        public double CalcFoodPrice()
         {
             double foodPrice = 0;
             foreach (Food item in ListFoods)
@@ -33,7 +39,7 @@ namespace provaRumo.Models
             return foodPrice;
         }
 
-        public double calcDrinkPrice()
+        public double CalcDrinkPrice()
         {
             double drinkPrice = 0;
             foreach (Drink item in ListDrinks)

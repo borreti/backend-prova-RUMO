@@ -20,6 +20,9 @@ namespace provaRumo.Models
         {
             this.Id = Id;
             this.Ingredients = Ingredients;
+            this.Name = Name;
+            this.Price = Price;
+            this.TimeToPrepare = TimeToPrepare;
         }
 
         public Food(double Price, string Name, List<string> Ingredients)
