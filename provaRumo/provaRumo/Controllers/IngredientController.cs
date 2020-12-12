@@ -27,6 +27,7 @@ namespace provaRumo.Controllers
         }
 
         [HttpGet]
+        [ActionName("ListItems")]
         public List<IBasicModel> ListItems()
         {
             Ingredient searcher = new Ingredient();
