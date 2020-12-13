@@ -15,7 +15,7 @@ namespace provaRumo.Models
         public void ProcessOrder(Order order)
         {
             Free = false;
-            foreach (Drink item in order.ListDrinks)
+            foreach (Drink item in order.Drinks)
             {
                 Thread.Sleep(item.TimeToPrepare);
             }
