@@ -30,7 +30,7 @@ namespace provaRumo
             // Controller with ID
             // To handle routes like `/api/VTRouting/1`
             config.Routes.MapHttpRoute(
-                name: "ControllerAndId",
+                name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: null,
                 constraints: new { id = @"^\d+$" } // Only integers 
