@@ -9,15 +9,15 @@ namespace provaRumo.Models
 {
     public class Food: IItem
     {
-        public int Id { get; set; }
+        public int FoodId { get; set; }
         public virtual ICollection<Ingredient> Ingredients { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
         public int TimeToPrepare { get; set; }
 
-        public Food(int Id, List<Ingredient> Ingredients, string Name, double Price, int TimeToPrepare)
+        public Food(int FoodId, List<Ingredient> Ingredients, string Name, double Price, int TimeToPrepare)
         {
-            this.Id = Id;
+            this.FoodId = FoodId;
             this.Ingredients = Ingredients;
             this.Name = Name;
             this.Price = Price;
@@ -26,7 +26,7 @@ namespace provaRumo.Models
 
         public Food()
         {
-
+            
         }
     }
 }

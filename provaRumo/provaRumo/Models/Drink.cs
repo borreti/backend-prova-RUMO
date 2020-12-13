@@ -26,22 +26,7 @@ namespace provaRumo.Models
 
         public Drink()
         {
-
-        }
-
-        public void Create()
-        {
-            EntityModel context = new EntityModel();
-            //Drink drink = new Drink(DrinkId, Name, Price, Alcohool, TimeToPrepare);
-            //context.Drinks.Add(drink);
-            //context.SaveChanges();
-            //return drink;
-        }
-
-        public void Get()
-        {
-            EntityModel context = new EntityModel();
-            //Entities.Customer.First(c => c.CustomerId == 20);
+            
         }
     }
 }
