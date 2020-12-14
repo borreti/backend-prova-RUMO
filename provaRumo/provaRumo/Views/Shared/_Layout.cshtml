@@ -1,9 +1,10 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
         .disabled {
             pointer-events: none;
@@ -14,7 +15,6 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -38,7 +38,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Meu Aplicativo ASP.NET</p>
+            <p>&copy; @DateTime.Now.Year - Simulador de pedidos ASP.NET</p>
         </footer>
     </div>
 
@@ -49,21 +49,30 @@
     <script>
         let drinks = [];
         let foods = [];
-        let tables = [];
-        let tableChoosed = null;
+        const client = {}
 
         const ajaxRequest = (method, endpoint, xmlhttp) => {
             xmlhttp.open(method, endpoint, true);
             xmlhttp.send();
         };
 
-        const setSelects = (method, endpoint, selectId, idPrefix) => {
+        const setSelects = (method, endpoint, type) => {
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    //document.getElementById("txtHint").innerHTML = this.responseText;
                     const responseJSON = JSON.parse(this.responseText);
-                    items = responseJSON;
+                    const items = responseJSON;
+                    let selectId;
+                    let idPrefix;
+                    if (type === 'food') {
+                        selectId = 'selectFood';
+                        idPrefix = 'Food';
+                        foods = items;
+                    } else if (type === 'drink') {
+                        selectId = 'selectDrink';
+                        idPrefix = 'Drink';
+                        drinks = items;
+                    }
                     const select = document.getElementById(selectId);
                     items.map((input) => {
                         select.innerHTML += `<option value="${input[idPrefix + 'Id']}"$>${input.Name}</option>`
@@ -73,32 +82,56 @@
             ajaxRequest(method, endpoint, xmlhttp);
         };
 
-        const setAllTables = (method, endpoint) => {
-            const xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    //document.getElementById("txtHint").innerHTML = this.responseText;
-                    const responseJSON = JSON.parse(this.responseText);
-                    tables = responseJSON;
-                    const tableDiv = document.getElementById("tables");
-                    tables.map((input) => {
-                        const enabled = input.Free ? '' : 'disabled';
-                        const classChoosed = input.Free ? 'btn btn-success' : 'btn btn-danger';
-                        const labelButton = input.Free ? `Solicitar mesa ${input.TableId}` : `Mesa ${input.TableId} ocupada.`;
-                        tableDiv.innerHTML += `<button ${enabled} class="${classChoosed}">${labelButton}</button>`
-                    });
-                }
-            };
-            ajaxRequest(method, endpoint, xmlhttp);
+        const connectClient = () => {
+            const cash = document.getElementById('money').value;
+            const name = document.getElementById('fullName').value;
+            if (isNaN(cash)) {
+                alert('Campo dinheiro disponível não contém um número.');
+                return -1;
+            } else if (cash < 0) {
+                alert('Campo dinheiro deve ter um valor maior ou igual a 0.');
+                return -1;
+            } else if (name.length <= 0) {
+                alert('Campo de nome deve ser preenchido.');
+                return -1;
+            } else {
+                client.name = name;
+                client.cash = cash;
+                document.getElementById('orders').classList.remove('disabled');
+                document.getElementById('divClient').classList.add('disabled');
+            }
         };
 
-        const connectClient = () => {
 
-        }
+        const refreshValue = (type) => {
+            let item;
+            let idName;
+            let labelValue;
+            if (type === 'food') {
+                item = document.getElementById('selectFood');
+                idName = 'foodValue';
+                labelValue = 'Valor dos alimentos: ';
+            } else if (type === 'drink') {
+                item = document.getElementById('selectDrink');
+                idName = 'drinkValue';
+                labelValue = 'Valor das bebidas: ';
+            } else {
+                alert(`Tipo ${type} é inválido. Os tipos válidos são "foodValue" e "drinkValue."`);
+            }
+            const index = item.value - 1;
+            const itemHTML = document.getElementById(idName);
+            let multiplierHTML = document.getElementById(type + 'Quant');
+            let multiplierValue = multiplierHTML.value;
+            if (isNaN(multiplierValue)) {
+                multiplierHTML.value = 1;
+                multiplierValue = 1;
+            }
+            itemHTML.innerHTML = labelValue + (foods[index].Price * multiplierValue);
+        };
 
-        setSelects('GET', 'http://localhost:55336/api/Foods', 'selectFood', 'Food');
-        setSelects('GET', 'http://localhost:55336/api/Drinks', 'selectDrink', 'Drink');
-        setAllTables('GET', 'http://localhost:55336/api/Tables');
+        setSelects('GET', 'http://localhost:55336/api/Foods', 'food');
+        setSelects('GET', 'http://localhost:55336/api/Drinks', 'drink');
+        //setAllTables('GET', 'http://localhost:55336/api/Tables');
     </script>
 </body>
 </html>

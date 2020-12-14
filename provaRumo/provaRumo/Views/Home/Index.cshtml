@@ -6,7 +6,7 @@
 
 <div class="row">
     <center>
-        <div class="col-md-6">
+        <div id="divClient" class="col-md-6">
             <h4>Bem vindo, cliente. Por favor, insira seus dados.</h4>
             <form>
                 <div class="form-group">
@@ -17,47 +17,66 @@
                     <label for="labelCash">Dinheiro disponível</label>
                     <input type="number" class="form-control" id="money" placeholder="0">
                 </div>
-                <button type="button" class="btn btn-primary">Conectar cliente</button>
+                <button type="button" onclick="connectClient()" class="btn btn-primary">Conectar cliente</button>
                 <hr />
-                <div id="tables" class="form-group disabled"></div>
+                @*<div id="tables" class="form-group disabled"></div>*@
             </form>
+            <hr />
+            <h3 id="clientName"></h3>
+            <h3 id="moneyAvailable"></h3>
         </div>
-        <div class="col-md-6 disabled">
+        <div id="orders" class="col-md-6 disabled">
             <h2>Faça seu pedido!</h2>
             <form>
                 <div class="form-group">
                     <label for="labelFood">Escolha uma comida.</label>
-                    <select id="selectFood" class="form-control"></select>
-                    <input type="number" class="form-control" id="foodQuant" placeholder="1">
+                    <select onchange="refreshValue('food')" id="selectFood" class="form-control"></select>
+                    <input class="form-control" id="foodQuant" placeholder="0" value="1">
                     <hr />
-                    <button>Adicionar comida ao pedido.</button>
+                    <h6 id="foodValue">Valor dos alimentos: 0</h6>
+                    <button type="button" class="btn btn-success">Adicionar comida ao pedido.</button>
                 </div>
                 <div class="form-group">
-                    <label for="labelDrink">Escolha uma bebida.</label>
-                    <select id="selectDrink" class="form-control"></select>
-                    <input type="number" class="form-control" id="drinkQuant" placeholder="1">
+                    <label for="selectDrink">Escolha uma bebida.</label>
+                    <select onchange="refreshValue('drink')" id="selectDrink" class="form-control"></select>
+                    <label for="drinkQuant">Quantidade</label>
+                    <input class="form-control" id="drinkQuant" placeholder="0" value="1">
                     <hr />
-                    <button>Adicionar bebida ao pedido.</button>
+                    <h6 id="drinkValue">Valor das bebidas: 0</h6>
+                    <button type="button" class="btn btn-success">Adicionar bebida ao pedido.</button>
+                    <hr />
                 </div>
                 <hr />
-                <button class="btn btn-primary">Finalizar pedido.</button>
-                <button class="btn btn-primary">Limpar pedido.</button>
-                <hr />
-                <div id="tables"></div>
+                <div class="form-group">
+                    <button class="btn btn-primary">Finalizar pedido.</button>
+                    <button class="btn btn-danger">Limpar pedido.</button>
+                    <hr />
+                    <h4>Detalhes do pedido.</h4>
+                    <div id="orderDetails">
+
+                    </div>
+                </div>
             </form>
             <hr />
-            <h4>Detalhes do pedido.</h4>
         </div>
     </center>
 </div>
 
 <div class="row">
     <div class="col-md-6">
-        <h2>Cozinha</h2>
-        <hr />
+        <center>
+            <h2>Cozinha</h2>
+            <h4 id="statusKitchen">Sem pedidos na cozinha.</h4>
+            <img width="256" height="256" src="https://media0.giphy.com/media/O7SZaIPGQezO8/giphy.gif" />
+            <hr />
+        </center>
     </div>
     <div class="col-md-6">
-        <h2>Copa</h2>
-        <hr />
+        <center>
+            <h2>Copa</h2>
+            <h4 id="statusCup">Sem pedidos na copa.</h4>
+            <img width="256" height="256" src="https://media4.giphy.com/media/eIZWHRHa3NqrL6aJoZ/giphy-downsized-large.gif" />
+            <hr />
+        </center>
     </div>
 </div>
