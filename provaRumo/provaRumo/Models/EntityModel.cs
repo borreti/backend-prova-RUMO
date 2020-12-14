@@ -9,7 +9,7 @@ namespace provaRumo.Models
 {
     public class EntityModel: DbContext
     {
-        public EntityModel() : base("restaurant15") { }
+        public EntityModel() : base("restaurant16") { }
         public DbSet<Food> Foods { get; set; }
         public DbSet<Drink> Drinks { get; set; }
         public DbSet<Order> Orders { get; set; }

@@ -14,6 +14,7 @@ namespace provaRumo.Models
         public double Price { get; set; }
         public float Alcohool { get; set; }
         public int TimeToPrepare { get; set; }
+        protected virtual ICollection<Drink> Drinks { get; set; }
 
         public Drink(int DrinkId, string Name, double Price, float Alcohool, int TimeToPrepare)
         {

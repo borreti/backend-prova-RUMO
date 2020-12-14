@@ -15,6 +15,7 @@ namespace provaRumo.Models
         public string Name { get; set; }
         public double Price { get; set; }
         public int TimeToPrepare { get; set; }
+        protected virtual ICollection<OrderHasFood> Foods { get; set; }
 
         public Food(int FoodId, List<FoodHasIngredient> Ingredients, string Name, double Price, int TimeToPrepare)
         {
