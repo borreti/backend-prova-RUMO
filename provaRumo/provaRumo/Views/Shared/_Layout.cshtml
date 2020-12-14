@@ -4,6 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+    <style>
+        .disabled {
+            pointer-events: none;
+            opacity: 0.4;
+        }
+    </style>
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -18,7 +24,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Nome do aplicativo", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Simulador de pedidos", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -39,5 +45,60 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script>
+        let drinks = [];
+        let foods = [];
+        let tables = [];
+        let tableChoosed = null;
+
+        const ajaxRequest = (method, endpoint, xmlhttp) => {
+            xmlhttp.open(method, endpoint, true);
+            xmlhttp.send();
+        };
+
+        const setSelects = (method, endpoint, selectId, idPrefix) => {
+            const xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    //document.getElementById("txtHint").innerHTML = this.responseText;
+                    const responseJSON = JSON.parse(this.responseText);
+                    items = responseJSON;
+                    const select = document.getElementById(selectId);
+                    items.map((input) => {
+                        select.innerHTML += `<option value="${input[idPrefix + 'Id']}"$>${input.Name}</option>`
+                    });
+                }
+            };
+            ajaxRequest(method, endpoint, xmlhttp);
+        };
+
+        const setAllTables = (method, endpoint) => {
+            const xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    //document.getElementById("txtHint").innerHTML = this.responseText;
+                    const responseJSON = JSON.parse(this.responseText);
+                    tables = responseJSON;
+                    const tableDiv = document.getElementById("tables");
+                    tables.map((input) => {
+                        const enabled = input.Free ? '' : 'disabled';
+                        const classChoosed = input.Free ? 'btn btn-success' : 'btn btn-danger';
+                        const labelButton = input.Free ? `Solicitar mesa ${input.TableId}` : `Mesa ${input.TableId} ocupada.`;
+                        tableDiv.innerHTML += `<button ${enabled} class="${classChoosed}">${labelButton}</button>`
+                    });
+                }
+            };
+            ajaxRequest(method, endpoint, xmlhttp);
+        };
+
+        const connectClient = () => {
+
+        }
+
+        setSelects('GET', 'http://localhost:55336/api/Foods', 'selectFood', 'Food');
+        setSelects('GET', 'http://localhost:55336/api/Drinks', 'selectDrink', 'Drink');
+        setAllTables('GET', 'http://localhost:55336/api/Tables');
+    </script>
 </body>
 </html>
