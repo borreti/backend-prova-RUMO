@@ -1,17 +1,14 @@
-﻿using System.Web.Mvc;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using provaRumo;
-using provaRumo.Controllers;
 
 namespace provaRumo.Tests.Controllers
 {
     [TestClass]
-    public class FoodControllerTest
+    public class OrdersControllerTest
     {
         [TestMethod]
-        public void Index()
+        public void TestMethod1()
         {
-           
         }
     }
 }
