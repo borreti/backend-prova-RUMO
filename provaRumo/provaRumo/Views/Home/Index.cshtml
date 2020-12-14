@@ -3,22 +3,61 @@
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
     <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
+
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+    <center>
+        <div class="col-md-6">
+            <h4>Bem vindo, cliente. Por favor, insira seus dados.</h4>
+            <form>
+                <div class="form-group">
+                    <label for="labelName">Nome completo</label>
+                    <input type="text" class="form-control" id="fullName" placeholder="Robert V. S. Cunha">
+                </div>
+                <div class="form-group">
+                    <label for="labelCash">Dinheiro disponível</label>
+                    <input type="number" class="form-control" id="money" placeholder="0">
+                </div>
+                <button type="button" class="btn btn-primary">Conectar cliente</button>
+                <hr />
+                <div id="tables" class="form-group disabled"></div>
+            </form>
+        </div>
+        <div class="col-md-6 disabled">
+            <h2>Faça seu pedido!</h2>
+            <form>
+                <div class="form-group">
+                    <label for="labelFood">Escolha uma comida.</label>
+                    <select id="selectFood" class="form-control"></select>
+                    <input type="number" class="form-control" id="foodQuant" placeholder="1">
+                    <hr />
+                    <button>Adicionar comida ao pedido.</button>
+                </div>
+                <div class="form-group">
+                    <label for="labelDrink">Escolha uma bebida.</label>
+                    <select id="selectDrink" class="form-control"></select>
+                    <input type="number" class="form-control" id="drinkQuant" placeholder="1">
+                    <hr />
+                    <button>Adicionar bebida ao pedido.</button>
+                </div>
+                <hr />
+                <button class="btn btn-primary">Finalizar pedido.</button>
+                <button class="btn btn-primary">Limpar pedido.</button>
+                <hr />
+                <div id="tables"></div>
+            </form>
+            <hr />
+            <h4>Detalhes do pedido.</h4>
+        </div>
+    </center>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Cozinha</h2>
+        <hr />
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+    <div class="col-md-6">
+        <h2>Copa</h2>
+        <hr />
     </div>
 </div>
