@@ -1,24 +1,91 @@
-﻿<div class="jumbotron">
+﻿@*<div class="jumbotron">
     <h1>ASP.NET</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
     <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+</div>*@
+
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+    <center>
+        <div id="divClient" class="col-md-12">
+            <h4>Bem vindo, cliente. Por favor, insira seus dados.</h4>
+            <form>
+                <div class="form-group">
+                    <label for="labelName">Nome completo</label>
+                    <input type="text" class="form-control" id="fullName" placeholder="Robert V. S. Cunha">
+                </div>
+                <div class="form-group">
+                    <label for="labelCash">Dinheiro disponível</label>
+                    <input type="number" class="form-control" id="money" placeholder="0">
+                </div>
+                <button type="button" onclick="connectClient()" class="btn btn-primary">Conectar cliente</button>
+                <hr />
+                @*<div id="tables" class="form-group disabled"></div>*@
+            </form>
+            <hr />
+            <h3 id="clientName"></h3>
+            <h3 id="moneyAvailable"></h3>
+        </div>
+    </center>
+</div>
+
+<div class="row">
+    <center>
+        <h2>Faça seu pedido!</h2>
+        <div id="orders" class="disabled">
+            <form>
+                <div id="orderFood" class="col-md-6">
+                    <div class="form-group">
+                        <label for="labelFood">Escolha uma comida.</label>
+                        <select onchange="refreshValue('food')" id="selectFood" class="form-control">
+                            <option id="initialFood" value="" selected disabled hidden>Selecione um prato.</option>
+                        </select>
+                        <h6 id="foodValue">Valor do prato: 0</h6>
+                        <button onclick="addItem('food')" type="button" class="btn btn-success">Adicionar prato ao pedido.</button>
+                        <hr />
+                    </div>
+                </div>
+                <div id="ordersDrink" class="col-md-6">
+                    <div class="form-group">
+                        <label for="selectDrink">Escolha uma bebida.</label>
+                        <select onchange="refreshValue('drink')" id="selectDrink" class="form-control">
+                            <option id="initialDrink" value="" selected disabled hidden>Selecione uma bebida.</option>
+                        </select>
+                        <h6 id="drinkValue">Valor da bebida: 0</h6>
+                        <button onclick="addItem('drink')" type="button" class="btn btn-success">Adicionar bebida ao pedido.</button>
+                        <hr />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h4>Valor total: <span id="orderTotal">0</span> </h4>
+                    <hr />
+                    <div id="orderDetails">
+
+                    </div>
+                    <button onclick="finishOrder()" type="button" class="btn btn-primary">Finalizar pedido.</button>
+                    <button onclick="cleanOrder()" type="button" class="btn btn-danger">Limpar pedido.</button>
+                    <hr />
+                </div>
+            </form>
+        </div>
+    <hr />
+    </center>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <center>
+            <h2>Cozinha</h2>
+            <h4 id="statusKitchen">Sem pedidos na cozinha.</h4>
+            <img width="256" height="256" src="https://media1.tenor.com/images/c422c662b6136685c4d9e5064652ba3b/tenor.gif?itemid=17927025" />
+            <hr />
+        </center>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+    <div class="col-md-6">
+        <center>
+            <h2>Copa</h2>
+            <h4 id="statusCup">Sem pedidos na copa.</h4>
+            <img width="256" height="256" src="https://media4.giphy.com/media/eIZWHRHa3NqrL6aJoZ/giphy-downsized-large.gif" />
+            <hr />
+        </center>
     </div>
 </div>

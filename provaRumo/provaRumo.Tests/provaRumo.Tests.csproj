@@ -98,7 +98,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\FoodControllerTest.cs" />
+    <Compile Include="Controllers\FoodsControllerTest.cs" />
+    <Compile Include="Controllers\IngredientsControllerTest.cs" />
+    <Compile Include="Controllers\TablesControllerTest.cs" />
+    <Compile Include="Controllers\DrinksControllerTest.cs" />
+    <Compile Include="Controllers\OrdersControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Controllers\ValuesControllerTest.cs" />

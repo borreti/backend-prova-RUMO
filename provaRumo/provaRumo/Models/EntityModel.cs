@@ -9,11 +9,20 @@ namespace provaRumo.Models
 {
     public class EntityModel: DbContext
     {
-        public EntityModel() : base("restaurant6") { }
+        public EntityModel() : base("restaurant18") { }
         public DbSet<Food> Foods { get; set; }
         public DbSet<Drink> Drinks { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Table> Tables { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<FoodHasIngredient> FoodHasIngredients { get; set; }
+        public DbSet<OrderHasFood> OrderHasFoods { get; set; }
+        public DbSet<OrderHasDrink> OrderHasDrinks { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<FoodHasIngredient>().HasKey(sc => new { sc.IngredientId, sc.FoodId });
+            modelBuilder.Entity<OrderHasFood>().HasKey(sc => new { sc.OrderId, sc.FoodId });
+            modelBuilder.Entity<OrderHasDrink>().HasKey(sc => new { sc.OrderId, sc.DrinkId});
+        }
     }
 }

@@ -1,14 +1,20 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+        .disabled {
+            pointer-events: none;
+            opacity: 0.4;
+        }
+    </style>
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -18,7 +24,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Nome do aplicativo", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Simulador de pedidos", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -32,12 +38,240 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Meu Aplicativo ASP.NET</p>
+            <p>&copy; @DateTime.Now.Year - Simulador de pedidos ASP.NET</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script>
+        let drinks = [];
+        let foods = [];
+        let foodsToProcess = [];
+        let drinksToProcess = [];
+        const client = {}
+        let order = {
+            'Foods': [],
+            'Drinks': [],
+            'OrderFinished': [],
+        };
+
+        const ajaxRequest = (method, endpoint, xmlhttp, body) => {
+            xmlhttp.open(method, endpoint, true);
+            if (body) {
+                xmlhttp.setRequestHeader("Content-type", "application/json");
+                xmlhttp.send(JSON.stringify(body));
+            } else {
+                xmlhttp.send();
+            }
+        };
+
+        const setSelects = (method, endpoint, type) => {
+            try {
+                const xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        const responseJSON = JSON.parse(this.responseText);
+                        // response json converted
+                        const items = responseJSON;
+                        // id from html
+                        let selectId;
+                        // class prefix to get the id.
+                        let idPrefix;
+                        if (type === 'food') {
+                            selectId = 'selectFood';
+                            idPrefix = 'Food';
+                            foods = items;
+                        } else if (type === 'drink') {
+                            selectId = 'selectDrink';
+                            idPrefix = 'Drink';
+                            drinks = items;
+                        }
+                        // get the html element
+                        const select = document.getElementById(selectId);
+                        items.map((input) => {
+                            select.innerHTML += `<option value="${input[idPrefix + 'Id']}"$>${input.Name}</option>`
+                        });
+                    }
+                };
+                ajaxRequest(method, endpoint, xmlhttp, null);
+            } catch (err) {
+                alert(err);
+                return err;
+            }
+        };
+
+        const connectClient = () => {
+            try {
+                const cash = document.getElementById('money').value;
+                const name = document.getElementById('fullName').value;
+                if (!cash) {
+                    alert('Campo dinheiro disponível não contém um número válido.');
+                    return -1;
+                } else if (cash < 0) {
+                    alert('Campo dinheiro deve ter um valor maior ou igual a 0.');
+                    return -1;
+                } else if (name.length <= 0) {
+                    alert('Campo de nome deve ser preenchido.');
+                    return -1;
+                } else {
+                    client.name = name;
+                    client.cash = cash;
+                    document.getElementById('orders').classList.remove('disabled');
+                    document.getElementById('divClient').classList.add('disabled');
+                }
+            } catch (err) {
+                alert(err);
+                return err;
+            }
+        };
+
+
+        const refreshValue = (type) => {
+            let selectItem;
+            let idName;
+            let labelValue;
+            if (type === 'food') {
+                selectItem = document.getElementById('selectFood');
+                idName = 'foodValue';
+                labelValue = 'Valor do prato: ';
+            } else if (type === 'drink') {
+                selectItem = document.getElementById('selectDrink');
+                idName = 'drinkValue';
+                labelValue = 'Valor das bebidas: ';
+            } else {
+                alert(`Tipo ${type} é inválido. Os tipos válidos são "foodValue" e "drinkValue."`);
+            }
+            const index = selectItem.value - 1;
+            const itemHTML = document.getElementById(idName);
+            itemHTML.innerHTML = labelValue + foods[index].Price;
+        };
+
+        const addItem = (type) => {
+            try {
+                let idType;
+                let prefixId;
+                let keyInObjOrder;
+                if (type === 'food') {
+                    idType = 'selectFood'
+                    prefixId = 'FoodId';
+                    keyInObjOrder = 'Foods';
+                } else if (type === 'drink') {
+                    idType = 'selectDrink';
+                    prefixId = 'DrinkId';
+                    keyInObjOrder = 'Drinks';
+                }
+                const selectItem = document.getElementById(idType);
+                const index = selectItem.value - 1;
+                const associatedObj = {}
+                associatedObj[prefixId] = selectItem.value;
+                order[keyInObjOrder].push(associatedObj);
+                const orderDetails = document.getElementById('orderDetails');
+                const orderTotal = document.getElementById('orderTotal');
+                let currentTotalValue = parseFloat(orderTotal.innerText);
+                let currentItem;
+                if (type === 'food') {
+                    currentItem = foods[index];
+                    foodsToProcess.push(currentItem);
+                } else if (type === 'drink') {
+                    currentItem = drinks[index];
+                    drinksToProcess.push(currentItem);
+                }
+                currentTotalValue += currentItem.Price;
+                orderTotal.innerHTML = currentTotalValue;
+                orderDetails.innerHTML += `<h5> ${currentItem.Name} </h5> <hr/>`;
+            } catch (err) {
+                alert(err);
+                return err;
+            }
+        };
+
+        const cleanOrder = () => {
+            order = {
+                'Foods': [],
+                'Drinks': [],
+                'OrderFinished': [],
+            };
+            foodsToProcess = [];
+            drinksToProcess = [];
+            const orderDetails = document.getElementById('orderDetails');
+            const orderTotal = document.getElementById('orderTotal');
+            orderDetails.innerHTML = '';
+            orderTotal.innerHTML = 0;
+        }
+
+        const finishOrder = () => {
+            let currentTotalValue = parseFloat(orderTotal.innerText);
+            if (currentTotalValue > client.cash) {
+                alert(`O valor ${currentTotalValue} é maior do que o saldo do cliente que é de ${client.cash}.`);
+                return -1;
+            }
+            order.OrderFinished = false;
+            const xmlhttp = new XMLHttpRequest();
+            let foodsFinished = false;
+            let drinksFinished = false;
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 201) {
+                    const response = JSON.parse(this.responseText);
+                    let statusKitchen = document.getElementById('statusKitchen');
+                    let statusCup = document.getElementById('statusCup');
+                    statusKitchen.innerHTML = 'Aguarde enquanto os cozinheiros processam seu pedido.';
+                    statusCup.innerHTML = 'Aguarde enquanto os barmans preparam seu pedido.';
+                    if (foodsToProcess.length > 0) {
+                        processItems(0, foodsToProcess)
+                            .then(() => {
+                                statusKitchen.innerHTML = 'Pedido finalizado.';
+                                foodsFinished = true;
+                                if (foodsFinished && drinksFinished) {
+                                    cleanOrder();
+                                }
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                return (err);
+                            });
+                    } else {
+                        foodsFinished = true;
+                    }
+
+                    if (drinksToProcess.length > 0) {
+                        processItems(0, drinksToProcess)
+                            .then(() => {
+                                statusCup = 'Pedido finalizado.';
+                                drinksFinished = true;
+                                if (foodsFinished && drinksFinished) {
+                                    cleanOrder();
+                                }
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                return (err);
+                            });
+                    } else {
+                        drinksFinished = true;
+                    }
+                }
+            };
+            ajaxRequest('POST', 'http://localhost:55336/api/Orders', xmlhttp, order);
+        }
+
+        const processItems = (index, itemArray) => {
+            return new Promise((resolve, reject) => {
+                if (index < itemArray.length) {
+                    setTimeout(() => {
+                        resolve(processItems(index + 1, itemArray));
+                    }, itemArray[index].TimeToPrepare);
+                } else {
+                    resolve();
+                }
+            });
+        }
+
+        setSelects('GET', 'http://localhost:55336/api/Foods', 'food');
+        setSelects('GET', 'http://localhost:55336/api/Drinks', 'drink');
+        //setAllTables('GET', 'http://localhost:55336/api/Tables');
+    </script>
 </body>
 </html>
