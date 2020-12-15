@@ -11,6 +11,7 @@ namespace provaRumo.Models
     {
         public int IngredientId { get; set; }
         public string Name { get; set; }
+        protected virtual ICollection<FoodHasIngredient> HasIngredients { get; set; }
 
         public Ingredient(int IngredientId, string Name)
         {
@@ -20,7 +21,7 @@ namespace provaRumo.Models
 
         public Ingredient()
         {
-
+            
         }
     }
 }

@@ -169,22 +169,20 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IngredientsController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
-    <Compile Include="Controllers\TablesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IItem.cs" />
-    <Compile Include="Interfaces\IWorkStation.cs" />
     <Compile Include="Models\Drink.cs" />
     <Compile Include="Models\EntityModel.cs" />
     <Compile Include="Models\Food.cs" />
+    <Compile Include="Models\FoodHasIngredient.cs" />
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\Table.cs" />
+    <Compile Include="Models\OrderHasDrink.cs" />
+    <Compile Include="Models\OrderHasFood.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Kitchen.cs" />
-    <Compile Include="Services\Pantry.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

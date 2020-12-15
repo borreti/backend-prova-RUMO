@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "provaRumo", "provaRumo\provaRumo.csproj", "{3E13936A-48C3-4215-BC7D-71767B0D9C12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "provaRumo.Tests", "provaRumo.Tests\provaRumo.Tests.csproj", "{27A3772C-414C-4E34-AC84-BB5F3AB8D9D0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{3E13936A-48C3-4215-BC7D-71767B0D9C12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E13936A-48C3-4215-BC7D-71767B0D9C12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E13936A-48C3-4215-BC7D-71767B0D9C12}.Release|Any CPU.Build.0 = Release|Any CPU
-		{27A3772C-414C-4E34-AC84-BB5F3AB8D9D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27A3772C-414C-4E34-AC84-BB5F3AB8D9D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27A3772C-414C-4E34-AC84-BB5F3AB8D9D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27A3772C-414C-4E34-AC84-BB5F3AB8D9D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
