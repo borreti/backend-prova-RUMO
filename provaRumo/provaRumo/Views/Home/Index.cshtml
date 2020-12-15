@@ -1,12 +1,12 @@
-﻿<div class="jumbotron">
+﻿@*<div class="jumbotron">
     <h1>ASP.NET</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
     <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+</div>*@
 
 <div class="row">
     <center>
-        <div id="divClient" class="col-md-6">
+        <div id="divClient" class="col-md-12">
             <h4>Bem vindo, cliente. Por favor, insira seus dados.</h4>
             <form>
                 <div class="form-group">
@@ -25,40 +25,49 @@
             <h3 id="clientName"></h3>
             <h3 id="moneyAvailable"></h3>
         </div>
-        <div id="orders" class="col-md-6 disabled">
-            <h2>Faça seu pedido!</h2>
+    </center>
+</div>
+
+<div class="row">
+    <center>
+        <h2>Faça seu pedido!</h2>
+        <div id="orders" class="disabled">
             <form>
-                <div class="form-group">
-                    <label for="labelFood">Escolha uma comida.</label>
-                    <select onchange="refreshValue('food')" id="selectFood" class="form-control"></select>
-                    <input class="form-control" id="foodQuant" placeholder="0" value="1">
-                    <hr />
-                    <h6 id="foodValue">Valor dos alimentos: 0</h6>
-                    <button type="button" class="btn btn-success">Adicionar comida ao pedido.</button>
+                <div id="orderFood" class="col-md-6">
+                    <div class="form-group">
+                        <label for="labelFood">Escolha uma comida.</label>
+                        <select onchange="refreshValue('food')" id="selectFood" class="form-control">
+                            <option id="initialFood" value="" selected disabled hidden>Selecione um prato.</option>
+                        </select>
+                        <h6 id="foodValue">Valor do prato: 0</h6>
+                        <button onclick="addItem('food')" type="button" class="btn btn-success">Adicionar prato ao pedido.</button>
+                        <hr />
+                    </div>
+                </div>
+                <div id="ordersDrink" class="col-md-6">
+                    <div class="form-group">
+                        <label for="selectDrink">Escolha uma bebida.</label>
+                        <select onchange="refreshValue('drink')" id="selectDrink" class="form-control">
+                            <option id="initialDrink" value="" selected disabled hidden>Selecione uma bebida.</option>
+                        </select>
+                        <h6 id="drinkValue">Valor da bebida: 0</h6>
+                        <button onclick="addItem('drink')" type="button" class="btn btn-success">Adicionar bebida ao pedido.</button>
+                        <hr />
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="selectDrink">Escolha uma bebida.</label>
-                    <select onchange="refreshValue('drink')" id="selectDrink" class="form-control"></select>
-                    <label for="drinkQuant">Quantidade</label>
-                    <input class="form-control" id="drinkQuant" placeholder="0" value="1">
+                    <h4>Valor total: <span id="orderTotal">0</span> </h4>
                     <hr />
-                    <h6 id="drinkValue">Valor das bebidas: 0</h6>
-                    <button type="button" class="btn btn-success">Adicionar bebida ao pedido.</button>
-                    <hr />
-                </div>
-                <hr />
-                <div class="form-group">
-                    <button class="btn btn-primary">Finalizar pedido.</button>
-                    <button class="btn btn-danger">Limpar pedido.</button>
-                    <hr />
-                    <h4>Detalhes do pedido.</h4>
                     <div id="orderDetails">
 
                     </div>
+                    <button onclick="finishOrder()" type="button" class="btn btn-primary">Finalizar pedido.</button>
+                    <button onclick="cleanOrder()" type="button" class="btn btn-danger">Limpar pedido.</button>
+                    <hr />
                 </div>
             </form>
-            <hr />
         </div>
+    <hr />
     </center>
 </div>
 
@@ -67,7 +76,7 @@
         <center>
             <h2>Cozinha</h2>
             <h4 id="statusKitchen">Sem pedidos na cozinha.</h4>
-            <img width="256" height="256" src="https://media0.giphy.com/media/O7SZaIPGQezO8/giphy.gif" />
+            <img width="256" height="256" src="https://media1.tenor.com/images/c422c662b6136685c4d9e5064652ba3b/tenor.gif?itemid=17927025" />
             <hr />
         </center>
     </div>
